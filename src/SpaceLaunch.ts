@@ -1,8 +1,13 @@
 import { Token } from "./Token";
+import { InMemoryUserStore } from "./userStore/userStore";
 
 export class SpaceLaunch {
-    private registeredUsers: Set<string> = new Set();
+    private registeredUsers: UserStore = new InMemoryUserStore();
     private inspectors: Set<string> = new Set();
+
+    constructor(userStore?: UserStore) {
+        this.registeredUsers = userStore ?? new InMemoryUserStore();
+    }
 
     register(user: {username: string}): RegistrationSuccessful {
         this.registeredUsers.add(user.username);
@@ -37,6 +42,11 @@ export class SpaceLaunch {
     makeInspector(username: string) {
         this.inspectors.add(username);
     }
+}
+
+export interface UserStore {
+    add(username: string): void;
+    has(username: string): boolean;
 }
 
 type RegistrationSuccessful = true;

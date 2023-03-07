@@ -1,5 +1,6 @@
 import { SpaceLaunch } from "../src/SpaceLaunch";
 import { Token } from "../src/Token";
+import { PersistentUserStore } from "../src/userStore/userStore";
 
 describe('User registration', () => {
     let spaceLaunch: SpaceLaunch;
@@ -35,5 +36,13 @@ describe('User registration', () => {
         spaceLaunch.makeInspector('Arnaud');
         token = spaceLaunch.getTokenFromLoginResult(spaceLaunch.login('Arnaud'));
         expect(token.getRole()).toBe('inspector');
+    })
+    
+    it('Registrations should be persisted', () => {
+        const spaceLaunch1 =  new SpaceLaunch(new PersistentUserStore());
+        const spaceLaunch2 =  new SpaceLaunch(new PersistentUserStore());
+
+        spaceLaunch1.register({username: 'Auguste'});
+        expect(spaceLaunch2.login('Auguste').successful).toBeTruthy();
     })
 })
