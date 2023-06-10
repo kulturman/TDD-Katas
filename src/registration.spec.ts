@@ -1,6 +1,6 @@
-import { SpaceLaunch } from "../src/SpaceLaunch";
-import { Token } from "../src/Token";
-import { PersistentUserStore } from "../src/userStore/userStore";
+import { SpaceLaunch } from "./SpaceLaunch";
+import { Token } from "./Token";
+import { PersistentUserStore } from "./userStore/userStore";
 
 describe('User registration', () => {
     let spaceLaunch: SpaceLaunch;
