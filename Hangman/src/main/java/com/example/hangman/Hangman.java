@@ -11,9 +11,9 @@ public class Hangman {
     private int remainingAttempts;
     private OutCome outcome = OutCome.GAME_IN_PROGRESS;
 
-    public Hangman(String correctWord, int attemptsCount) {
-        this.correctWord = correctWord;
+    public Hangman(WordRepository wordRepository, int attemptsCount) {
         remainingAttempts = attemptsCount;
+        correctWord = wordRepository.getWord();
     }
 
     public GuessResult guess(char attempt) {

@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class HangmanApplication {
     public static void main(String[] args) {
         SpringApplication.run(HangmanApplication.class, args);
-        Hangman hangman = new Hangman("KOTOAMATSUKAMI", 10);
+        Hangman hangman = new Hangman(new InMemoryWordRepository(), 10);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Guess a word");
 

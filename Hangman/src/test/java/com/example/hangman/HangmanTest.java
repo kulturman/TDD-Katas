@@ -6,12 +6,15 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class HangmanTest {
+    InMemoryWordRepository wordRepository;
     Hangman hangman;
     int ATTEMPTS_COUNT = 10;
 
     @BeforeEach
     void beforeEach() {
-        hangman = new Hangman("BONJOUR", ATTEMPTS_COUNT);
+        wordRepository = new InMemoryWordRepository();
+        wordRepository.wordToGuess = "BONJOUR";
+        hangman = new Hangman(wordRepository, ATTEMPTS_COUNT);
     }
 
     @Test
@@ -61,17 +64,26 @@ class HangmanTest {
 
     @Test
     void endGameOnLastAttempt() {
-        var hangman = new Hangman("TEST", 1);
+        var hangman = createHangmanInstanceWithReturnWord("A", 1);
         var result = hangman.guess('X');
+        assertGameIsOverWithOutcome(result, OutCome.LOSS);
+    }
+
+    private static void assertGameIsOverWithOutcome(GuessResult result, OutCome outCome) {
         assertThat(result.isGameOver()).isTrue();
-        assertThat(result.outCome()).isEqualTo(OutCome.LOSS);
+        assertThat(result.outCome()).isEqualTo(outCome);
     }
 
     @Test
-    void endGameIfWordIsFound() {
-        var hangman = new Hangman("A", 1);
+    void endGameIfWordIsFound() {;
+        var hangman = createHangmanInstanceWithReturnWord("A", 1);
         var result = hangman.guess('A');
-        assertThat(result.isGameOver()).isTrue();
-        assertThat(result.outCome()).isEqualTo(OutCome.WIN);
+        assertGameIsOverWithOutcome(result, OutCome.WIN);
+    }
+
+    Hangman createHangmanInstanceWithReturnWord(String word, int attemptsCount) {
+        var wordRepository = new InMemoryWordRepository();
+        wordRepository.wordToGuess = word;
+        return new Hangman(wordRepository, attemptsCount);
     }
 }
