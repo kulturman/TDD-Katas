@@ -56,7 +56,7 @@ class HangmanTest {
     }
 
     @Test
-    void attemptsCountNotDecrementedIsLetterWasAlreadyPlayed() {
+    void attemptsCountNotDecrementedIfLetterWasAlreadyPlayed() {
         hangman.guess('Z');
         var result = hangman.guess('Z');
         assertThat(result.getRemainingAttempts()).isEqualTo(ATTEMPTS_COUNT - 1);
