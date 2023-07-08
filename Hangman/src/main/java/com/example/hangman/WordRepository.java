@@ -1,5 +1,8 @@
 package com.example.hangman;
 
 public interface WordRepository {
-    public String getWord();
+    String getWord(int wordNumber);
+    int getMinWordNumber();
+    int getMaxWordNumber();
+
 }

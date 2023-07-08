@@ -10,10 +10,16 @@ public class Hangman {
     private final char HIDING_CHARACTER = '*';
     private int remainingAttempts;
     private OutCome outcome = OutCome.GAME_IN_PROGRESS;
+    private WordSelector wordSelector;
 
-    public Hangman(WordRepository wordRepository, int attemptsCount) {
+    public Hangman(
+        WordRepository wordRepository,
+        RandomNumberProvider randomNumberProvider,
+        int attemptsCount
+    ) {
         remainingAttempts = attemptsCount;
-        correctWord = wordRepository.getWord();
+        wordSelector = new WordSelector(wordRepository, randomNumberProvider);
+        correctWord = wordSelector.selectWord();
     }
 
     public GuessResult guess(char attempt) {

@@ -6,15 +6,17 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class HangmanTest {
-    InMemoryWordRepository wordRepository;
+    WordRepositoryStub wordRepository;
+    RandomNumberStub randomNumberProvider;
     Hangman hangman;
     int ATTEMPTS_COUNT = 10;
 
     @BeforeEach
     void beforeEach() {
-        wordRepository = new InMemoryWordRepository();
+        wordRepository = new WordRepositoryStub();
+        randomNumberProvider = new RandomNumberStub();
         wordRepository.wordToGuess = "BONJOUR";
-        hangman = new Hangman(wordRepository, ATTEMPTS_COUNT);
+        hangman = new Hangman(wordRepository, randomNumberProvider, ATTEMPTS_COUNT);
     }
 
     @Test
@@ -82,8 +84,8 @@ class HangmanTest {
     }
 
     Hangman createHangmanInstanceWithReturnWord(String word, int attemptsCount) {
-        var wordRepository = new InMemoryWordRepository();
+        var wordRepository = new WordRepositoryStub();
         wordRepository.wordToGuess = word;
-        return new Hangman(wordRepository, attemptsCount);
+        return new Hangman(wordRepository, randomNumberProvider, attemptsCount);
     }
 }
