@@ -2,7 +2,6 @@ import {BankAccount} from "./bankAccount";
 import {InMemoryTransactionsRepository} from "./inMemoryTransactionsRepository";
 import {DeterministicDateProvider} from "./deterministicDateProvider";
 import {FakeStatementPrinter} from "./fakeStatementPrinter";
-import {Transaction} from "./transaction";
 
 describe('Bank account test', () => {
     let transactionsRepository: InMemoryTransactionsRepository;
