@@ -1,11 +1,13 @@
 import {TransactionsRepository} from "./transactionsRepository";
 import {DateProvider} from "./dateProvider";
+import {StatementGenerator} from "./statementGenerator";
 
 export class BankAccount {
 
     constructor(
         private transactionsRepository: TransactionsRepository,
-        private dateProvider: DateProvider
+        private dateProvider: DateProvider,
+        private statementGenerator: StatementGenerator
     ) {
     }
     async deposit(amount: number) {
@@ -17,6 +19,7 @@ export class BankAccount {
     }
 
     async printStatement() {
-
+        const statementRepresentation = this.statementGenerator.generate(this.transactionsRepository.getTransactions());
+        this.statementGenerator.print(statementRepresentation);
     }
 }
