@@ -17,7 +17,7 @@ describe('Console statement generator', () => {
        const statement = generateStatmentForTransactions();
 
        const firstTransactionLine = `2023-01-01  ||  2000  ||  2000`;
-       const secondTransactionLine = `2023-01-02  ||  -500  ||  1500`;
+       const secondTransactionLine = `2023-10-02  ||  -500  ||  1500`;
        expect(statement).toEqual(`${headerLine}\n${firstTransactionLine}\n${secondTransactionLine}\n`);
     });
 
@@ -28,7 +28,7 @@ describe('Console statement generator', () => {
                 amount: 2000,
             },
             {
-                date: new Date('2023-01-02T22:00:00'),
+                date: new Date('2023-10-02T22:00:00'),
                 amount: -500,
             }
         ]);
