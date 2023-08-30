@@ -1,12 +1,10 @@
 import {BankAccount} from "./bankAccount";
 import {InMemoryTransactionsRepository} from "./inMemoryTransactionsRepository";
-import {ConsoleStatementGenerator} from "./consoleStatementGenerator";
 import {SystemDateProvider} from "./systemDateProvider";
 
 const bankAccount = new BankAccount(
     new InMemoryTransactionsRepository(),
-    new SystemDateProvider(),
-    new ConsoleStatementGenerator()
+    new SystemDateProvider()
 );
 
 bankAccount.deposit(3500).then();

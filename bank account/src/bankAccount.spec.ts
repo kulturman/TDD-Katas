@@ -15,44 +15,64 @@ describe('Bank account test', () => {
         dateProvider = new DeterministicDateProvider();
         statementGenerator = new FakeStatementPrinter();
         dateProvider.currentDate = transaction.date;
-        bankAccount = new BankAccount(transactionsRepository, dateProvider, statementGenerator);
+        bankAccount = new BankAccount(transactionsRepository);
     });
 
     it('adds deposit', () => {
         bankAccount.deposit(transaction.amount);
 
-        const retrievedTransaction = transactionsRepository.getTransactions()[0];
-        expect(retrievedTransaction).toMatchObject(transaction);
+        expectsTransactionToHaveBeenSaved(transaction.amount);
     });
 
     it('saves withdrawal', () => {
         bankAccount.withdraw(transaction.amount);
 
-        const retrievedTransaction = transactionsRepository.getTransactions()[0];
-        expect(retrievedTransaction).toMatchObject({
-            ...transaction,
-            amount: -transaction.amount
-        });
+        expectsTransactionToHaveBeenSaved(-transaction.amount);
     });
 
     it('interacts with printer generator', () => {
-        const generatedStatement = 'Statement result';
-        statementGenerator.generateResult = generatedStatement;
-        bankAccount = new BankAccount(transactionsRepository, dateProvider, statementGenerator);
+        const headerLine = `Date    ||  Amount  || Balance\n`;
+        bankAccount = new BankAccount(transactionsRepository);
+
+        const logSpy = jest.spyOn(console, 'log');
 
         bankAccount.printStatement();
 
-        expectGenerateStatementHasBeenCalledWithTransactions();
-        expectPrintStatementHasBeenCalledWith(generatedStatement);
+        expect(logSpy).toHaveBeenCalledWith(headerLine);
     });
 
-    function expectGenerateStatementHasBeenCalledWithTransactions() {
-        expect(statementGenerator.generateHasBeenCalled).toBeTruthy();
-        expect(statementGenerator.generateParameter).toEqual(transactionsRepository.getTransactions());
-    }
+    it('Allows composition on the printStatement', () => {
+        const headerLine = `Date    ||  Amount  || Balance\n`;
+        bankAccount = new BankAccount(transactionsRepository);
+        const returningBankAccountPrinter = new ReturningBankAccountPrinter(bankAccount);
 
-    function expectPrintStatementHasBeenCalledWith(statement: string) {
-        expect(statementGenerator.printHasBeenCalled).toBeTruthy();
-        expect(statementGenerator.printParamater).toEqual(statement);
+        expect (returningBankAccountPrinter.printStatementAsString()).toEqual(headerLine);
+    });
+
+    function expectsTransactionToHaveBeenSaved(amount: number) {
+        const returningBankAccountPrinter = new ReturningBankAccountPrinter(bankAccount);
+        const formattedDate = transaction.date.getFullYear() + '-' + '0' + (transaction.date.getMonth() + 1) + '-' + '0' + (transaction.date.getDay() + 1);
+        expect(returningBankAccountPrinter.getStatement(1)).toEqual(`${formattedDate}  ||  ${amount}  ||  ${amount}`);
     }
 });
+
+class ReturningBankAccountPrinter {
+    constructor(private bankAccount: BankAccount) {
+
+    }
+    
+    getStatement(index: number) {
+        return this.printStatementAsString().split('\n')[index];
+    }
+
+    printStatementAsString(): string {
+        let buffer = '';
+        const old = console.log;
+        const writer = (s: string) => buffer += s;
+        console.log = writer;
+        this.bankAccount.printStatement();
+
+        console.log = old;
+        return buffer;
+    }
+}

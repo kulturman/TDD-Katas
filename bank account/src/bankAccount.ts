@@ -1,25 +1,26 @@
 import {TransactionsRepository} from "./transactionsRepository";
 import {DateProvider} from "./dateProvider";
-import {StatementGenerator} from "./statementGenerator";
+import {ConsoleStatementGenerator} from "./consoleStatementGenerator";
 
 export class BankAccount {
 
     constructor(
         private transactionsRepository: TransactionsRepository,
-        private dateProvider: DateProvider,
-        private statementGenerator: StatementGenerator
+        /*private dateProvider: DateProvider*/
     ) {
     }
+
     async deposit(amount: number) {
-        this.transactionsRepository.save(this.dateProvider.now(), amount);
+        this.transactionsRepository.save(new Date(), amount);
     }
 
     async withdraw(amount: number) {
-        this.transactionsRepository.save(this.dateProvider.now(), - amount);
+        this.transactionsRepository.save(new Date(), - amount);
     }
 
     async printStatement() {
-        const statementRepresentation = this.statementGenerator.generate(this.transactionsRepository.getTransactions());
-        this.statementGenerator.print(statementRepresentation);
+        const statementGenerator = new ConsoleStatementGenerator();
+        const statementRepresentation = statementGenerator.generate(this.transactionsRepository.getTransactions());
+        statementGenerator.print(statementRepresentation);
     }
 }
