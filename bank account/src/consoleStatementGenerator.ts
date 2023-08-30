@@ -7,20 +7,18 @@ export class ConsoleStatementGenerator implements StatementGenerator {
         let balance = 0;
 
         transactions.forEach(transaction => {
-            const year = transaction.date.getFullYear();
-            const month = transaction.date.getMonth() + 1;
-            const day = transaction.date.getDay() + 1;
+            const formattedDate = this.formatDate(transaction);
 
             balance += transaction.amount;
 
-            statement += `${year}-${this.getZeroStringPadded(month)}-${this.getZeroStringPadded(day)}  ||  ${transaction.amount}  ||  ${balance}\n`;
+            statement += `${formattedDate}  ||  ${transaction.amount}  ||  ${balance}\n`;
         });
 
         return statement;
     }
 
-    private getZeroStringPadded(numberToPad: number): string {
-        return numberToPad >= 10 ? numberToPad.toString(): '0' + numberToPad;
+    private formatDate(transaction: Transaction) {
+        return transaction.date.toISOString().split('T')[0];
     }
 
     print(statement: string): void {
