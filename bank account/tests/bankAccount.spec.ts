@@ -1,7 +1,8 @@
-import {BankAccount} from "./bankAccount";
-import {InMemoryTransactionsRepository} from "./inMemoryTransactionsRepository";
-import {DeterministicDateProvider} from "./deterministicDateProvider";
-import {FakeStatementPrinter} from "./fakeStatementPrinter";
+import {InMemoryTransactionsRepository} from "../src/infrastructure/inMemoryTransactionsRepository";
+import {DeterministicDateProvider} from "../src/infrastructure/deterministicDateProvider";
+import {BankAccount} from "../src/domain/bankAccount";
+import {FakeStatementPrinter} from "../src/infrastructure/fakeStatementPrinter";
+
 
 describe('Bank account test', () => {
     let transactionsRepository: InMemoryTransactionsRepository;

@@ -1,6 +1,6 @@
-import {TransactionsRepository} from "./transactionsRepository";
 import {DateProvider} from "./dateProvider";
 import {StatementGenerator} from "./statementGenerator";
+import {TransactionsRepository} from "./transactionsRepository";
 
 export class BankAccount {
 

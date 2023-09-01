@@ -1,4 +1,4 @@
-import {ConsoleStatementGenerator} from "./consoleStatementGenerator";
+import {ConsoleStatementGenerator} from "../src/infrastructure/consoleStatementGenerator";
 
 describe('Console statement generator', () => {
     let consoleStatementGenerator: ConsoleStatementGenerator;
@@ -20,6 +20,8 @@ describe('Console statement generator', () => {
        const secondTransactionLine = `2023-10-02  ||  -500  ||  1500`;
        expect(statement).toEqual(`${headerLine}\n${firstTransactionLine}\n${secondTransactionLine}\n`);
     });
+
+    it('')
 
     function generateStatmentForTransactions() {
         return consoleStatementGenerator.generate([

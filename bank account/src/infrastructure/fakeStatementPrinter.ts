@@ -1,5 +1,6 @@
-import {StatementGenerator} from "./statementGenerator";
-import {Transaction} from "./transaction";
+import {StatementGenerator} from "../domain/statementGenerator";
+import {Transaction} from "../domain/transaction";
+
 
 export class FakeStatementPrinter implements StatementGenerator {
     printHasBeenCalled: boolean = false;

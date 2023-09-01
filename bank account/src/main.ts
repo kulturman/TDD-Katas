@@ -1,7 +1,8 @@
-import {BankAccount} from "./bankAccount";
-import {InMemoryTransactionsRepository} from "./inMemoryTransactionsRepository";
-import {ConsoleStatementGenerator} from "./consoleStatementGenerator";
-import {SystemDateProvider} from "./systemDateProvider";
+import {InMemoryTransactionsRepository} from "./infrastructure/inMemoryTransactionsRepository";
+import {SystemDateProvider} from "./infrastructure/systemDateProvider";
+import {ConsoleStatementGenerator} from "./infrastructure/consoleStatementGenerator";
+import {BankAccount} from "./domain/bankAccount";
+
 
 const bankAccount = new BankAccount(
     new InMemoryTransactionsRepository(),

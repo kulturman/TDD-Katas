@@ -1,5 +1,6 @@
-import {TransactionsRepository} from "./transactionsRepository";
-import {Transaction} from "./transaction";
+import {TransactionsRepository} from "../domain/transactionsRepository";
+import {Transaction} from "../domain/transaction";
+
 
 export class InMemoryTransactionsRepository implements TransactionsRepository {
     transactions: Transaction[];
