@@ -21,8 +21,6 @@ describe('Console statement generator', () => {
        expect(statement).toEqual(`${headerLine}\n${firstTransactionLine}\n${secondTransactionLine}\n`);
     });
 
-    it('')
-
     function generateStatmentForTransactions() {
         return consoleStatementGenerator.generate([
             {
