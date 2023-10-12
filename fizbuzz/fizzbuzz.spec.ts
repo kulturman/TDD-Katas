@@ -1,12 +1,20 @@
 class Fizzbuzz {
     transform(number: number): string {
-        if (number % 3 === 0 && number % 5 === 0)
+        if (this.isMultipleOfThree(number) && this.isMultipleOfFive(number))
             return "FizzBuzz";
-        if (number % 3 === 0)
+        if (this.isMultipleOfThree(number))
             return "Fizz";
-        if (number % 5 === 0)
+        if (this.isMultipleOfFive(number))
             return "Buzz";
         return number.toString();
+    }
+
+    private isMultipleOfFive(number: number) {
+        return number % 5 === 0;
+    }
+
+    private isMultipleOfThree(number: number) {
+        return number % 3 === 0;
     }
 }
 
@@ -44,6 +52,6 @@ describe('Fizzbuzz tests', function () {
         ['FizzBuzz', 15],
         ['Buzz', 50],
     ])('returns %s when given %s', (expected, number) => {
-        expect(fizzbuzz.transform(number)).toEqual(expected);
+        expect(fizzbuzz.transform(number)).toBe(expected);
     });
 });
