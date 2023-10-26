@@ -1,12 +1,13 @@
 export class Soundex {
     private MAX_ENCODED_STRING_LENGTH = 4;
+    
     encode(word: string) {
         const encodedWord = this.head(word).toUpperCase() + this.encodeWord(this.tail(word));
         return this.zeroPads(encodedWord);
     }
 
     private zeroPads(encodedWord: string) {
-        return encodedWord + "0".repeat(4 - encodedWord.length);
+        return encodedWord + "0".repeat(this.MAX_ENCODED_STRING_LENGTH - encodedWord.length);
     }
 
     private tail(word: string): string {
