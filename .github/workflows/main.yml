@@ -1,0 +1,15 @@
+name: first-workflow
+
+on: [push]
+
+jobs:
+  say-hello:
+    runs-on: ubuntu:latest
+    steps:
+      - run: echo 'Hello'
+
+  show-code:
+    runs-on: ubuntu:latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ls -la
