@@ -1,6 +1,6 @@
 name: my-firstrepo
 
-on:[push]
+on: [push]
 
 jobs:
   test-job:
