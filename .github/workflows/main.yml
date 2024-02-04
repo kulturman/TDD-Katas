@@ -11,4 +11,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: ls -la
+      - name: Print dir
+        run: ls -la
