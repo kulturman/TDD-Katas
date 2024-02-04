@@ -13,3 +13,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Print dir
         run: ls -la
+      - name: Print repo variable
+        run: echo $USERNAME
